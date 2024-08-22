@@ -1,6 +1,4 @@
 from typing import Optional
-
-from app.core.dto.users import UserCreateDTO
 from app.core.models.users import User
 from app.core.repositories.users import UsersRepository
 from app.core.services.base import BaseEntityService
