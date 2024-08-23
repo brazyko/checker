@@ -19,7 +19,9 @@ async def create_receipt(
 ):
     user_id = user_data.id
     receipt_service = ReceiptService()
-    receipt = await receipt_service.create_receipt(user_id=user_id, receipt_data=receipt_data)
+    receipt = await receipt_service.create_receipt(
+        user_id=user_id, receipt_data=receipt_data
+    )
     return receipt
 
 
@@ -40,7 +42,7 @@ async def get_receipts(
 
 
 @router.get("/receipts/by-id/", status_code=200)
-async def get_receipts(
+async def get_receipt_by_id(
     user_data: User = Depends(AuthService.validate_user),
     data: ReceiptReq = Depends(),
 ):
@@ -65,5 +67,3 @@ async def view_receipt(receipt_id: int, char_limit: int = 32):
     # Format the receipt text
     formatted_receipt = format_receipt_text(receipt, char_limit)
     return formatted_receipt
-
-

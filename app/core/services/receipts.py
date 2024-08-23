@@ -33,7 +33,7 @@ class ReceiptService(BaseEntityService):
                 "name": product["name"],
                 "price": product["price"],
                 "quantity": product["quantity"],
-                "total": total
+                "total": total,
             }
             products_raw.append(product_raw)
 
@@ -47,7 +47,7 @@ class ReceiptService(BaseEntityService):
             "payment_type": receipt_data.payment.type,
             "payment_amount": amount,
             "total": total_price,
-            "rest": rest
+            "rest": rest,
         }
         await receipt_repository.create(data=receipt_raw)
         receipt = await receipt_repository.get_first(filter_data=receipt_raw)
@@ -57,7 +57,7 @@ class ReceiptService(BaseEntityService):
                 name=product["name"],
                 price=product["price"],
                 quantity=product["quantity"],
-                total=product["total"]
+                total=product["total"],
             )
             products.append(product_d)
         payment = PaymentDTO(
@@ -70,7 +70,7 @@ class ReceiptService(BaseEntityService):
             payment=payment,
             total=receipt.total,
             rest=receipt.rest,
-            created_at=receipt.created_at
+            created_at=receipt.created_at,
         )
         return receipt
 
@@ -83,7 +83,7 @@ class ReceiptService(BaseEntityService):
                 name=product["name"],
                 price=product["price"],
                 quantity=product["quantity"],
-                total=product["total"]
+                total=product["total"],
             )
             products.append(product_d)
         payment = PaymentDTO(
@@ -96,7 +96,7 @@ class ReceiptService(BaseEntityService):
             payment=payment,
             total=receipt.total,
             rest=receipt.rest,
-            created_at=receipt.created_at
+            created_at=receipt.created_at,
         )
         return receipt
 
@@ -110,7 +110,7 @@ class ReceiptService(BaseEntityService):
                     name=product["name"],
                     price=product["price"],
                     quantity=product["quantity"],
-                    total=product["total"]
+                    total=product["total"],
                 )
                 products.append(product_d)
             payment = PaymentDTO(
@@ -123,7 +123,7 @@ class ReceiptService(BaseEntityService):
                 payment=payment,
                 total=receipt.total,
                 rest=receipt.rest,
-                created_at=receipt.created_at
+                created_at=receipt.created_at,
             )
             receipts.append(receipt)
         return receipts
@@ -131,4 +131,3 @@ class ReceiptService(BaseEntityService):
     async def get_receipts_list_count(self, filter_data: dict) -> int:
         count = await self.repository.get_receipts_list_count(filter_data=filter_data)
         return count
-

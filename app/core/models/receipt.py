@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Integer, Column, DateTime, ForeignKey, DECIMAL, String
+from sqlalchemy import Integer, Column, DateTime, DECIMAL, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.declarative import declarative_base
 

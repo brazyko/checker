@@ -51,7 +51,9 @@ class BaseEntityService(AbstractEntityService):
         return count
 
     async def get_list(
-        self, filter_data: Optional[dict] = None, order_data: Optional[Tuple[str]] = None
+        self,
+        filter_data: Optional[dict] = None,
+        order_data: Optional[Tuple[str]] = None,
     ) -> List[Any]:
         if not filter_data:
             filter_data = {}
@@ -73,7 +75,9 @@ class BaseEntityService(AbstractEntityService):
     async def create_bulk(self, items: List[dict]) -> None:
         await self.repository.create_bulk(items=items)
 
-    async def update_or_create(self, filter_data: Dict[str, Any], data: Dict[str, Any]) -> None:
+    async def update_or_create(
+        self, filter_data: Dict[str, Any], data: Dict[str, Any]
+    ) -> None:
         await self.repository.update_or_create(filter_data=filter_data, data=data)
 
     async def update_bulk(self, items: List[dict]) -> None:

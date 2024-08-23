@@ -1,4 +1,3 @@
-import json
 from abc import ABC
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Type, TypeVar, Tuple
@@ -24,7 +23,9 @@ class AbstractBaseRepository(AbstractRepository):
         raise NotImplementedError
 
     @classmethod
-    async def get_list(cls, filter_data: dict, order_data: Tuple[str] = ("id",)) -> List[Any]:
+    async def get_list(
+        cls, filter_data: dict, order_data: Tuple[str] = ("id",)
+    ) -> List[Any]:
         raise NotImplementedError
 
     @classmethod
@@ -99,7 +100,9 @@ class BaseSQLAsyncDrivenBaseRepository(AbstractBaseRepository):
         "any_e": lambda q, k, v: BaseSQLAsyncDrivenBaseRepository.__any_e(q, k, v),
         "not_in": lambda stmt, k, v: stmt.where(k.not_in(v)),  # does not work with None
         "like": lambda q, k, v: q.filter(k.like(f"%{v}%")),
-        "not_like_all": lambda q, k, v: BaseSQLAsyncDrivenBaseRepository.__not_like_all(q, k, v),
+        "not_like_all": lambda q, k, v: BaseSQLAsyncDrivenBaseRepository.__not_like_all(
+            q, k, v
+        ),
         "jsonb_like": lambda stmt, k, v: stmt.where(k.cast(String).like(f"%{v}%")),
         "jsonb_not_like": lambda stmt, k, v: stmt.where(~k.cast(String).like(f"%{v}%")),
     }
@@ -186,7 +189,9 @@ class BaseSQLAsyncDrivenBaseRepository(AbstractBaseRepository):
 
     @classmethod
     async def get_list(
-        cls, filter_data: Optional[dict] = None, order_data: Optional[Tuple[str]] = ("id",)
+        cls,
+        filter_data: Optional[dict] = None,
+        order_data: Optional[Tuple[str]] = ("id",),
     ) -> List[ModelType]:  # type: ignore
         if not filter_data:
             filter_data = {}
@@ -328,7 +333,9 @@ class BaseNoSQLAsyncDrivenBaseRepository(AbstractBaseRepository):
         "lte": lambda stmt, k, v: stmt.find(k <= v),
         "e": lambda stmt, k, v: stmt.find(k == v),
         "ne": lambda stmt, k, v: stmt.find(k != v),
-        "like": lambda stmt, k, v: stmt.find({k: {"$regex": f".*{v}.*", "$options": "i"}}),
+        "like": lambda stmt, k, v: stmt.find(
+            {k: {"$regex": f".*{v}.*", "$options": "i"}}
+        ),
         "in": lambda stmt, k, v: stmt.find({k: {"$in": v}}),
     }
 
@@ -353,9 +360,13 @@ class BaseNoSQLAsyncDrivenBaseRepository(AbstractBaseRepository):
             order_item_tmp = order_item
             if order_item_tmp.startswith("-"):
                 order_item_tmp = order_item[1:]
-                parsed_order_data.append((getattr(cls.model(), order_item_tmp), pymongo.DESCENDING))
+                parsed_order_data.append(
+                    (getattr(cls.model(), order_item_tmp), pymongo.DESCENDING)
+                )
             else:
-                parsed_order_data.append((getattr(cls.model(), order_item_tmp), pymongo.ASCENDING))
+                parsed_order_data.append(
+                    (getattr(cls.model(), order_item_tmp), pymongo.ASCENDING)
+                )
 
         return parsed_order_data
 
@@ -387,7 +398,9 @@ class BaseNoSQLAsyncDrivenBaseRepository(AbstractBaseRepository):
 
     @classmethod
     async def get_list(
-        cls, filter_data: Optional[dict] = None, order_data: Optional[Tuple[str]] = ("id",)
+        cls,
+        filter_data: Optional[dict] = None,
+        order_data: Optional[Tuple[str]] = ("id",),
     ) -> List[Document]:  # type: ignore
         if not filter_data:
             filter_data = {}

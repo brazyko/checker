@@ -6,7 +6,7 @@ def format_receipt_text(receipt, char_limit):
     for product in receipt.products:
         quantity_price = f"{product['quantity']} x {product['price']}"
         total_price = f"{product['total']:.2f}"
-        product_name = product['name']
+        product_name = product["name"]
 
         lines.append(f"{quantity_price:<15}{total_price:>{char_limit - 15}}")
         if len(product_name) > char_limit:
@@ -25,4 +25,4 @@ def format_receipt_text(receipt, char_limit):
 
 
 def split_text_into_lines(text, char_limit):
-    return [text[i:i + char_limit] for i in range(0, len(text), char_limit)]
+    return [text[i: i + char_limit] for i in range(0, len(text), char_limit)]

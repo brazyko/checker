@@ -18,7 +18,9 @@ async def register(user_data: UserCreate):
     users_service = UsersService()
 
     # Перевірка, чи існує користувач з таким ім'ям
-    existing_user = await users_service.get_first(filter_data={"username": user_data.username})
+    existing_user = await users_service.get_first(
+        filter_data={"username": user_data.username}
+    )
     if existing_user:
         raise HTTPException(status_code=400, detail="User already exists")
 

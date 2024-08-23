@@ -35,7 +35,6 @@ class ReceiptRepository(BaseSQLAsyncDrivenBaseRepository):
                 r.total,
                 r.rest
             FROM receipts as r
-                
         """
 
         where_stmt = """

@@ -10,9 +10,10 @@ security = HTTPBearer()
 
 
 class AuthService:
-
     @staticmethod
-    async def validate_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:
+    async def validate_user(
+        credentials: HTTPAuthorizationCredentials = Depends(security),
+    ) -> User:
         token = credentials.credentials
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -27,6 +28,7 @@ class AuthService:
         except JWTError:
             raise credentials_exception
         from app.core.services.users import UsersService
+
         users_service = UsersService()
         user = await users_service.get_first(filter_data={"username": username})
         if user is None:

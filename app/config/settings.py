@@ -2,8 +2,7 @@ import os
 import pathlib
 import secrets
 import sys
-from enum import Enum
-from typing import List, Optional, Union
+from typing import List
 
 import uuid
 from environs import Env
@@ -52,7 +51,9 @@ class SettingsBase(PydanticSettings):
     DB_NAME: str = env.str("DB_NAME")
     DB_DRIVER: str = env.str("DB_DRIVER", "postgresql+asyncpg")
     DB_URL: str = f"{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    DB_URL_SYNC: str = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DB_URL_SYNC: str = (
+        f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    )
 
     SHOW_SQL: bool = env.bool("SHOW_SQL", False)
     CONNECTIONS_POOL_MIN_SIZE: int = env.int("CONNECTIONS_POOL_MIN_SIZE", 5)
